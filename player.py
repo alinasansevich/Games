@@ -29,11 +29,4 @@ class Player():
 			print("Your score:\n" + self.present_score)
 		elif ("-" * 1) in self.present_score:
 			self.present_score = "HANGMAN"
-			print("Your score:\n" + self.present_score)	
-	
-	
-	
-	
-	
-###### TESTING, TESTING, 1, 2, 3... ######
-
+			print("Your score:\n" + self.present_score)
