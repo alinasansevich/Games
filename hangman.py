@@ -32,12 +32,24 @@ for item in all_players:
 print("\nLet's start playing!")
 
 		
-####### TO DO: add words to the list!
-list_of_words = ["apple", "banana", "coconut"]#, "dolphin", "elephant", "flower", "goat", "hat", "igloo???", "jet", "kite", "lolipop???"]
-lista_de_palabras = []
-
+list_of_words = ["apple", "aeroplane", 'ant', "banana", "baseball", "brother", "boy",
+                 "coconut", "caterpillar", "cartoon", "chocolate","diamond",
+                 "dollar", "dolphin", "dinosaur","english", "everywhere","elephant", 
+                 "float", "fox", "father", "flower", "fancy", "giant", "gold", "goat", "hat", 
+                 "heat", "halloween", "igloo", "iguana", "iceberg", "jet", 
+                 "jupyter", "jewel", "kangaroo", "kitten", "kite", "lolipop", 
+                 "ladder", "lady", "mother", "music", "magic", "mermaid", "never",
+                 "name", "noble", "opposite", "octopus", "oatmeal", "parrot", 
+                 "penguin", "pirate", "queen", "question", "quinoa", "raspberry",
+                 "robot", "red", "rectangle", "squirrel", "square", "sunshine",
+                 "sister", "super", "triangle", "tornado", "tuesday", "umbrella",
+                 "unicorn", "universe", "violet", "victory", "volcano", "water",
+                 "wisdom", "whale", "xylophone", "zebra", "zipper"]
 # PARA DESPUES: choose language 
 # ask for input english/spanish, and continue game in the chosen language
+lista_de_palabras = []
+
+
 time.sleep(1)
 print("OK, here it goes, good luck!")
 
@@ -51,6 +63,7 @@ print("\n\t" + word_in_progress + "\n")
 
 # The game starts here:
 all_scores = 0
+all_letters = []
 
 while ('-' in word_in_progress) and (all_scores != number_of_players):
     
@@ -67,11 +80,12 @@ while ('-' in word_in_progress) and (all_scores != number_of_players):
     for item in all_players:
         if word_in_progress != word_to_guess:
             suggested_letter = input("Please choose a letter, {}: ".format(all_players[all_players.index(item)].name.title()))
+            all_letters.append(suggested_letter)
             if suggested_letter in word_to_guess:
                 print("Yes, good choice.\nOur word looks like this now:\n")
             else:
                 print("No, no, better luck next time.")
-                # end of replacement
+            
             word_in_progress = hf.update_word(word_to_guess, word_in_progress, suggested_letter)
             print("\t" + word_in_progress + "\n")
             if '-' not in word_in_progress:
@@ -80,13 +94,14 @@ while ('-' in word_in_progress) and (all_scores != number_of_players):
                 break
             if suggested_letter in word_to_guess:
                 risked = hf.risk_word(word_to_guess, all_players, item)
-                # word_in_progress = hf.update_word(word_to_guess, word_in_progress, suggested_letter)
                 if risked == word_to_guess:
                     word_in_progress = risked
                     break
 
             if suggested_letter not in word_to_guess:
                 item.change_score()
+            
+            hf.print_all_letters(all_letters)
 
 
 # if everyone lost...

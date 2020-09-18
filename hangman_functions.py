@@ -15,7 +15,6 @@ def update_word(word_to_guess, word_in_progress, suggested_letter):
 	word_in_progress = word_in_progress_2
 
 	return word_in_progress
-	#print("\t" + word_in_progress.capitalize() + "\n")
 
 
 def risk_word(word_to_guess, all_players, item):
@@ -27,11 +26,19 @@ def risk_word(word_to_guess, all_players, item):
         take_risk = input("OK! Let's see what's on your mind: ")
         if take_risk == word_to_guess:
             print("Excellent! We have a winner!\n\nCongratulations, {}!\n".format(all_players[all_players.index(item)].name.title()))
-            # COMPLETAR ACA? FIN DEL JUEGO
-            return take_risk #NO UPDATEA!!! CHECK QUE HACE ESTA LINEA
+            return take_risk
         else:
             print("No no, too bad, that's not it.")
             item.change_score()
             return take_risk
     else:
         print("OK, maybe next time.")
+
+
+def print_all_letters(all_letters):
+    """(list) -> str
+    Print all the letters that have been suggested in the game.
+    """
+    letters_msg = '  '.join(all_letters)
+    print("\nLetters suggested so far:")
+    print(letters_msg)
