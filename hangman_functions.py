@@ -41,4 +41,4 @@ def print_all_letters(all_letters):
     """
     letters_msg = '  '.join(all_letters)
     print("\nLetters suggested so far:")
-    print(letters_msg)
+    print(letters_msg.upper())

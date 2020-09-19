@@ -13,19 +13,20 @@ within a certain number of guesses.
 import time
 import random
 import hangman_functions as hf
+import pyinputplus as pyip
 from player import Player
 
 
 # The program begins
 # Ask how many players will play
-number_of_players = int(input("Hello, welcome to Hangman!\nHow many people will be playing today?: "))
+number_of_players = int(pyip.inputNum("Hello, welcome to Hangman!\nHow many people will be playing today?: "))
 
 # all_players is a list of Players
 all_players = []
 print("OK, good!")
 print("Please enter the names of the {} player(s), one at a time".format(number_of_players))
 for num in range(number_of_players):
-	all_players.append(Player(input("name: ")))
+	all_players.append(Player(pyip.inputStr("name: ")))
 print("So today's players are:")
 for item in all_players:
 	print("\t" + item.name.capitalize())
@@ -80,28 +81,31 @@ while ('-' in word_in_progress) and (all_scores != number_of_players):
     for item in all_players:
         if word_in_progress != word_to_guess:
             suggested_letter = input("Please choose a letter, {}: ".format(all_players[all_players.index(item)].name.title()))
-            all_letters.append(suggested_letter)
-            if suggested_letter in word_to_guess:
-                print("Yes, good choice.\nOur word looks like this now:\n")
-            else:
-                print("No, no, better luck next time.")
-            
-            word_in_progress = hf.update_word(word_to_guess, word_in_progress, suggested_letter)
-            print("\t" + word_in_progress + "\n")
-            if '-' not in word_in_progress:
-                print("You got it!")
-                print("We have a winner!\n\nCongratulations, {}!\n".format(all_players[all_players.index(item)].name.title()))
-                break
-            if suggested_letter in word_to_guess:
-                risked = hf.risk_word(word_to_guess, all_players, item)
-                if risked == word_to_guess:
-                    word_in_progress = risked
+            if suggested_letter.isalpha():
+                all_letters.append(suggested_letter)
+                if suggested_letter in word_to_guess:
+                    print("Yes, good choice.\nOur word looks like this now:\n")
+                else:
+                    print("No, no, better luck next time.")
+                
+                word_in_progress = hf.update_word(word_to_guess, word_in_progress, suggested_letter)
+                print("\t" + word_in_progress + "\n")
+                if '-' not in word_in_progress:
+                    print("You got it!")
+                    print("We have a winner!\n\nCongratulations, {}!\n".format(all_players[all_players.index(item)].name.title()))
                     break
-
-            if suggested_letter not in word_to_guess:
-                item.change_score()
-            
-            hf.print_all_letters(all_letters)
+                if suggested_letter in word_to_guess:
+                    risked = hf.risk_word(word_to_guess, all_players, item)
+                    if risked == word_to_guess:
+                        word_in_progress = risked
+                        break
+    
+                if suggested_letter not in word_to_guess:
+                    item.change_score()
+                
+                hf.print_all_letters(all_letters)
+            else:
+                print("That's not a letter, you just lost your turn.\n")
 
 
 # if everyone lost...
